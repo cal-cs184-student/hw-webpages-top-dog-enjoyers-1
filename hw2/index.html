@@ -55,7 +55,7 @@
 			creating a 2D Vector to store our new intermediary points. Then, we used a for loop, starting at 0 and looping up to 
 			<code>points.size() - 1</code> times. This ensures we are working on one less point with each recursive call, allowing us to 
 			eventually converge at a singular point. For each pair of adjacent points in the for loop and a given parameter <code>t</code>, 
-			we find the linear interpolation of the two points using \( (1 - t) * p_i + t * p<sub>i + 1</sub> \). We then add this point to our 2D Vector.
+			we find the linear interpolation of the two points using \( (1 - t) * p<sub>i</sub> + t * p<sub>i + 1</sub> \) . We then add this point to our 2D Vector.
 			Once the for loop has terminated, we return our vector. By pressing <code>E</code> in our GUI, we step along each call of our 
 			recursive function. Once pressing <code>E</code> causes the red point to appear, we have reached our base case and evaluated our
 			Bezier curve at a single point.

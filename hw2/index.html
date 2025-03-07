@@ -159,13 +159,13 @@
 			are adjacent to the passed in edge are not on the boundary. If they are, we do not perform an edge flip and return
 			<code>e0</code>. If they are not on the boundary, we then store the six half edges that make up the two
 			triangles of the edge we want to flip. Note that one of these halfedges is the twin of <code>e0</code>.
-			Next, we store the two associated faces, four associated edges (not including <code>e0></code>), and four
+			Next, we store the two associated faces, four associated edges (not including <code>e0</code>), and four
 			associated vertices. Afterwards, we use <code>setNeighbors()</code> to reset the associated <code>next</code>,
-			<code>twin</code>, <code>vertex</code>, <code>edge,</code>, and <code>face</code> for each of our six halfedges. We 
+			<code>twin</code>, <code>vertex</code>, <code>edge</code>, and <code>face</code> for each of our six halfedges. We 
 			need to do this because as we flip the edges, the relationship between these different parameters of a halfedge change
 			and we need to update them accordingly. After we've updated the parameters of each halfedge, we need to update the 
 			parameters of the two faces and the four vertices to make sure that they are associated with the correct halfedges
-			after the edge flip occurs. Finally, we returned <code>e0</code>An interesting implentation trick that we 
+			after the edge flip occurs. Finally, we returned <code>e0</code>. An interesting implentation trick that we 
 			used was making sure that we stored all relevant pointers, even if they didn't need to be updated. For example, we 
 			stored all four edges in their own variables, even though we could have referenced them through pointers via the 
 			haldedges. This helped us make sure that we weren't making any minor mistakes when referencing these variables later
@@ -182,7 +182,7 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="task4_flippedTeapot.png" width="400px"/>
-				  <figcaption>Teapot with Non-Adjacent Edge Flips/figcaption>
+				  <figcaption>Teapot with Non-Adjacent Edge Flips</figcaption>
 				</td>
 			  </tr>
 			  <tr>
@@ -192,7 +192,7 @@
 				</td>
 				<td style="text-align: center;">
 				  <img src="task4_newAngle.png" width="400px"/>
-				  <figcaption>TTeapot with More & Adjacent Edge Flips (Angle 2)</figcaption>
+				  <figcaption>Teapot with More & Adjacent Edge Flips (Angle 2)</figcaption>
 				</td>
 			  </tr>
 			</table>

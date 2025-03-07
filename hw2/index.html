@@ -153,27 +153,71 @@
 		</div>
 
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+			For this task, the way we implemented edge flips was first having a conditional that checks if the two faces that
+			are adjacent to the passed in edge are not on the boundary. If they are, we do not perform an edge flip and return
+			<code>e0</code>. If they are not on the boundary, we then store the six half edges that make up the two
+			triangles of the edge we want to flip. Note that one of these halfedges is the twin of <code>e0</code>.
+			Next, we store the two associated faces, four associated edges (not including <code>e0></code>), and four
+			associated vertices. Afterwards, we use <code>setNeighbors()</code> to reset the associated <code>next</code>,
+			<code>twin</code>, <code>vertex</code>, <code>edge,</code>, and <code>face</code> for each of our six halfedges. We 
+			need to do this because as we flip the edges, the relationship between these different parameters of a halfedge change
+			and we need to update them accordingly. After we've updated the parameters of each halfedge, we need to update the 
+			parameters of the two faces and the four vertices to make sure that they are associated with the correct halfedges
+			after the edge flip occurs. Finally, we returned <code>e0</code>An interesting implentation trick that we 
+			used was making sure that we stored all relevant pointers, even if they didn't need to be updated. For example, we 
+			stored all four edges in their own variables, even though we could have referenced them through pointers via the 
+			haldedges. This helped us make sure that we weren't making any minor mistakes when referencing these variables later
+			on. This ties into a helpful debugging tip; by explicitly storing our variables, it was easier to understand what was
+			occurring at each step as opposed to getting confused between different pointers.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4_normalTeapot.png" width="400px"/>
+				  <figcaption>Teapot with No Flipped Edges</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task4_flippedTeapot.png" width="400px"/>
+				  <figcaption>Teapot with Non-Adjacent Edge Flips/figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4_moreFlips.png" width="400px"/>
+				  <figcaption>Teapot with More & Adjacent Edge Flips (Angle 1)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task4_newAngle.png" width="400px"/>
+				  <figcaption>TTeapot with More & Adjacent Edge Flips (Angle 2)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The debugging for this task was arduous! At first, whenever we flipped an edge, we would create a hole in our
+			mesh. We knew that this was caused by a misplaced pointer, but with so many pointers, it was hard to determined 
+			exactly what went wrong. We first started debugging by drawing out the edge flip. Drawing the 
+			edge flip and explicitly labeling each relevant part made it easier for us to go through our code and make sure 
+			that our pointers matched up. While this helped our understanding of the task, it did not resolve the error. Thus,
+			our next debugging step was to be more deliberate in how we were defining our variables. Previously, we defined variables
+			using other variables. For example, we had <code>HalfedgeCIter he1 = e0->halfedge()</code> and 
+			<code> HalfedgeCIter he2 = he1->twin()</code>. While this definitely would have worked, we found it difficult to tell
+			if our variables were storing the correct information. To counteract this, we stored everything relevant to
+			<code>e0</code>, <code>he1</code>, and <code>he2</code>. Through these two methods, we were able to find 
+			inconsistencies in our pointers, allowing us to eventually debug this method.
+		</p>
 
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		
 		</div>
 	</body>
 </html>

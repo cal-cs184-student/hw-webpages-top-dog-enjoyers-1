@@ -205,9 +205,10 @@
 			edge flip and explicitly labeling each relevant part made it easier for us to go through our code and make sure 
 			that our pointers matched up. While this helped our understanding of the task, it did not resolve the error. Thus,
 			our next debugging step was to be more deliberate in how we were defining our variables. Previously, we defined variables
-			using other variables. For example, we had <code>HalfedgeCIter he1 = e0->halfedge()</code> and 
-			<code> HalfedgeCIter he2 = he1->twin()</code>. While this definitely would have worked, we found it difficult to tell
-			if our variables were storing the correct information. To counteract this, we stored everything relevant to
+			using other variables. For example, we had <code>HalfedgeCIter he1 = e0->halfedge()</code>, 
+			<code> HalfedgeCIter he2 = he1->twin()</code>, <code>HalfedgeIter heCD = he2->next()</code>, 
+			<code>HalfedgeIter heDB = heCD->next()</code> etc. While this definitely would have worked, we found it difficult to 
+			tell if our variables were storing the correct information. To counteract this, we stored everything relevant to 
 			<code>e0</code>, <code>he1</code>, and <code>he2</code>. Through these two methods, we were able to find 
 			inconsistencies in our pointers, allowing us to eventually debug this method.
 		</p>

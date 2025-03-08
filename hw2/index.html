@@ -207,14 +207,79 @@
 			our next debugging step was to be more deliberate in how we were defining our variables. Previously, we defined variables
 			using other variables. For example, we had <code>HalfedgeCIter he1 = e0->halfedge()</code>, 
 			<code> HalfedgeCIter he2 = he1->twin()</code>, <code>HalfedgeIter heCD = he2->next()</code>, 
-			<code>HalfedgeIter heDB = heCD->next()</code> etc. While this definitely would have worked, we found it difficult to 
+			<code>HalfedgeIter heDB = heCD->next()</code>, etc. While this definitely would have worked, we found it difficult to 
 			tell if our variables were storing the correct information. To counteract this, we stored everything relevant to 
 			<code>e0</code>, <code>he1</code>, and <code>he2</code>. Through these two methods, we were able to find 
 			inconsistencies in our pointers, allowing us to eventually debug this method.
 		</p>
 
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+			We implemented task 5 in a very similar way to task 4. The first thing that we did was have a conditional check 
+			whether or not if a face adjacent to the edge we're splitting is on the boundary. If it is, we return a VertexIter
+			and do not split the edge. If it is not on the boundary, then we first define the four original vertices associated 
+			with the two triangles on the mesh. Alongside the edge we want to split, we calculate the midpoint a place a fifth
+			vertex there. Next, we store all of the original halfedges inside variables. For this method, we create eight new halfedges 
+			(including twins). Next, we store the three new edges we must create and the given edge <code>e0</code> in variables. Finally,
+			we store the original two faces and two new faces in variables. Next, we start setting the neighbors of each of the new 
+			halfedges. We implemented this by setting each of the four triangles separately, creating four distinct cycles that made it
+			easy for us to understand each pointer in the context of the edge split. Afterwards, we reassign all faces, edges, and vertices
+			to new halfedges, even if the process is redundant, to ensure that all of the pointers are stored properly. Finally, we return
+			the midpoint vertex <code>vM</code>. The main implementation trick that we performed for this task was making our code as
+			legible as possible. We added several comments and most importantly, set the neighbors of each triangle in its own separate
+			chunk, creating a cycle structure for the next pointers. This made it easy for us to quickly identify any misplaced pointers,
+			speeding up the debugging process.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5_noSplit.png" width="400px"/>
+				  <figcaption>Cube Before Edge Splits</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5_split.png" width="400px"/>
+				  <figcaption>Cube After Edge Splits</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5_ogCow.png" width="400px"/>
+				  <figcaption>Original Cow</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5_flippedCow.png" width="400px"/>
+				  <figcaption>Cow with Flipped Edges</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5_splitCow.png" width="400px"/>
+				  <figcaption>Cow After Splitting Flipped Edges</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5_finalCow.png" width="400px"/>
+				  <figcaption>Cow After Performing More Splits and Flips</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			Our debugging journey wasn't as bad for task 5 as it was for task 4 as task 4 had taught us a lot about 
+			best practices. We started by first drawing out a before and after diagram of an edge split, making sure to
+			properly label all relevant edges, faces, vertices, and halfedges. Referencing our task 4 implementation, we 
+			began to implement task 5. Our first iteration was extremely close with the only issue being two of the four 
+			faces not rendering. After carefully going through all of our pointers and referencing our diagram, we found
+			the pointers that we had defined incorrect with <code>setNeighbors</code> and were able to resolve the issue.
+		</p>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

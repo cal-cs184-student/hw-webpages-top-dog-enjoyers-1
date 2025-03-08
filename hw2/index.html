@@ -115,7 +115,7 @@
 		<p>
 			De Casteljau's algorithm applies to Bezier surfaces because instead of working along a one dimensional curve, we are 
 			now working along a two dimensional surface. We accomplish this by using de Casteljau's algorithm twice; first along 
-			<code>u</code> as one of our parameters and then along <code>t</code> as our other parameter. For this task, we
+			<code>u</code> as one of our parameters and then along <code>v</code> as our other parameter. For this task, we
 			implemented de Casteljau's algorithm by applying the algorithm (using the <code>evaluate1D()</code> method) for each row 
 			of our <code>n x n</code> control points with parameter <code>u</code>. Each point is added to a Vector3D. After we 
 			finish evaluating each row, we then evaluate the Vector3D with parameter <code>v</code> using <code>evaluate1D()</code>.

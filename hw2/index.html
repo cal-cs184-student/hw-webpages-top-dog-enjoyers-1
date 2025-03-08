@@ -295,12 +295,94 @@
 			properly label all relevant edges, faces, vertices, and halfedges. Referencing our task 4 implementation, we 
 			began to implement task 5. Our first iteration was extremely close with the only issue being two of the four 
 			faces not rendering. After carefully going through all of our pointers and referencing our diagram, we found
-			the pointers that we had defined incorrect with <code>setNeighbors</code> and were able to resolve the issue.
+			the pointers that we had defined incorrect with <code>setNeighbors()</code> and were able to resolve the issue.
 		</p>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
+		<p>
+			We implemented loop subdivision by first computing new positions for all of the old vertices in the input mesh. 
+			This works by looping through every vertex, finding its degree, calculating the neighbor sum (defined as the sum
+			of the positions of the neighboring vertices) and then calculating the new position. We set all of these vertices
+			to <code>vertex->isNew = false</code> as they existed in the original mesh. Next, we compute all of the new edge
+			and vertex positions. We store all of the edges in the original mesh into an array called <code>originalEdges</code>.
+			Next, we find the halfedge, twin, and four vertices associated with two adjacent triangles that share that specific 
+			edge. If the faces of these triangles are not on the boundary, then we set the new position of the edge using the 
+			equation given in the spec and set <code>edge->isNew = false</code>. Now, we split every edge in the original mesh. 
+			We create an array called <code>newVertices</code> and as we loop through <code>originalEdges</code>, we split each 
+			edge, set the midpoint vertex to <code>isNew = true</code> and add the midpoint vertex to our array. In our next step,
+			we flip all of the new edges that connect an old vertex and a new vertex. To do this, we loop through every edge in 
+			our mesh. For new edges, we check that one of their vertices is new and the other is old. If this is true, we flip
+			the edge. Finally, we copy the new vertex positions into the final vertex positions by looping through every vertex
+			in the mesh and set <code>vertex->position = vertex->newPosition</code>.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6_original.png" width="400px"/>
+				  <figcaption>Original Cube</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6_subDiv1.png" width="400px"/>
+				  <figcaption>Cube Subdivided Once</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6_subDiv2.png" width="400px"/>
+				  <figcaption>Cube Subdivided Twice</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6_subDiv3.png" width="400px"/>
+				  <figcaption>Cube Subdivided Thrice</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			In the screenshots above, we show what happens to the cube when we subdivide three times. We can see that while the 
+			shape smooths out generally, the sharp corners do not completely smooth out, leading to the smooth shape to still have
+			defined and misshapen corners even after several iterations of subdivision. We can reduce this effect by pre-splitting 
+			the edges that go along the diagonal of each face.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6_preOG.png" width="400px"/>
+				  <figcaption>Pre-Processed Cube</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6_preSD1.png" width="400px"/>
+				  <figcaption>Pre-Processed Cube Subdivided Once</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task6_preSD2.png" width="400px"/>
+				  <figcaption>Pre-Processed Cube Subdivided Twice</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task6_preSD3.png" width="400px"/>
+				  <figcaption>Pre-Processed Cube Subdivided Thrice</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			In the screenshots above, we can see how by pre-processing the edges that go along the diagonal of the faces of 
+			the cube, we can make the cube subdivide symmetrically. This is because when we perform an edge split on these
+			diagonal edges, we make it so each face has four triangles. When upsampling, we perform a 4-to-1 subdivision. Thus,
+			the orginal cube's faces are off by a factor, causing it to become misshapen when we upsample. Pre-processing makes it
+			so that each face now has four triangles, and this alleviates the misshapen form by ensuring that the upsampling is
+			being performed on the optimal number of triangles.
+		</p>
+
 		</div>
 	</body>
 </html>

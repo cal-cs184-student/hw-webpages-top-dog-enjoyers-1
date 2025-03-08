@@ -43,7 +43,21 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		
+		<p>
+			In Homework 2, we focused on geometric modeling. We first started with Bezier curves and surfaces, a commonly 
+			utilized way to model smooth surfaces in computer graphics. We implemented these using De Casteljau's Algorithm, 
+			a recursive way to implement Bezier curves and surfaces. Next, we worked with triangle meshes and the halfedge data 
+			structure. We started by implementing area-weighted vertex normals. We used this for Phong shading, a method of shading
+			that provides better shading than default flat shading for smooth surfaces. Afterwards, we implemented edge flips. An edge
+			flip works by taking a pair of triangles that share an edge and replacing that original edge with a new edge drawn across
+			the other two vertices of the triangles. Next, we implemented edge splits. Edge splits take a pair of adjacent triangles,
+			calculating the midpoint of the shared edge, and adding two new edges from the other vertices to the midpoint. Finally,
+			we implemented loop subdivision for mesh sampling, which converts a coarse polygon mesh into a higher resolution one by
+			using an upsampling algorithm to upsample. Something interesting that we learned about this project was how small changes in 
+			the mesh, such as edge flips and splits, can significantly impact the final shape and smoothness of the model. This
+			homework also emphasized the importance and power of the halfedge data structure in meshes. 
+		</p>
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 

@@ -65,14 +65,14 @@
 			<code>mesh->positions</code> through <code>p2 - p1</code> and <code>p3 - p1</code>. Next, we calculate the 
 			vector from the triange's vertex to the ray's origin using <code>r.o - p1</code> and store it in <code>s</code>. We 
 			then take the cross product of the ray's direction and the triangle's second edge, storing the result in 
-			<code>s1</code>, and the cross product of <code>s</code>> and the triangle's first edge, storing the result in 
+			<code>s1</code>, and the cross product of <code>s</code> and the triangle's first edge, storing the result in 
 			<code>s2</code>. Afterwards, we create a <code>Vector3D</code> where the first entry is the dot product of 
 			<code>s2</code> and <code>edge2</code>, the second entry is the dot product of <code>s1</code> and <code>s</code>,
 			and the third entry is the dot product of <code>s2</code> and the ray's direction. We find the normalization term to
 			be the one over the cross product of <code>s1</code> and <code>edge1</code> and multiply this by the Vector3D. This 
 			results in a Vector3D that stores t, the scalar distance between the ray's origin and the intersection point, and 
 			two barycentric coordinates. We can use these results to determine if there is an intersection by checking if 
-			<code>t &lt; r.min_t || t &gt; r.max_t || b1 &lt; 0 || b2 &lt; 0 || b1 + b2 &gt; 1</code> are all false. Ultimately,
+			<code>t &gt; r.min_t || t &lt; r.max_t || b1 &lt; 0 || b2 &lt; 0 || b1 + b2 &gt; 1</code> are all false. Ultimately,
 			we know that they do not intersect if the barycentric coordinates are less than 0, meaning they are outside of the 
 			triangle, and if t is between <code>min_t</code> and <code>max_t</code>.
 		</p>

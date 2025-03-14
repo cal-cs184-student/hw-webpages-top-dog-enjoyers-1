@@ -32,13 +32,8 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-		Link to GitHub repository: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
-		
-		<figure>
-			<img src="cornell.png" alt="Cornell Boxes with Bunnies" style="width:70%"/>
-			<figcaption>You can add images with captions!</figcaption>
-		</figure>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw3/">https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw3/</a>
+		Link to GitHub repository: (TODO) <a href="https://github.com/cal-cs184-student/sp25-hw3-woopers-woops-1">https://github.com/cal-cs184-student/sp25-hw3-woopers-woops-1</a>
 
 		<!--
 		We've already added one heading per part, to make your write-up as navigable when grading. Please fit your write-up within these sections!
@@ -48,29 +43,60 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+			Ray generation works by taking normalized coordinates in an image space with normalized coordinates turning them into 
+			a sensor in the camera space. This works by taking pixel coordinates, transforming them using <code>hFov</code> and 
+			<code>vFov</code> as points of reference, storing the transformed coordinates into a vector, and then normalizing it.
+			Next, we generate the ray in the camera space by multipling <code>c2w</code> and the previously mentioned vector and 
+			normalizing the result. Finally, we return the ray, creating it using the camera's position, our new vector, and 
+			<code>min_t</code> and <code>max_t</code>. Through ray generation, we are able to check for primitive intersection.
+			Primitive intersection works by generating rays and testing them against geometry--in this case, triangles and 
+			spheres--for intersections. The specifics of triangle intersection can be seen below. Sphere intersection works 
+			similarly to triangle intersection, with the primary difference being that we solve for the quadratic formula, set 
+			it equal to <code>t</code>, and test if it falls between <code>min_t</code> and <code>max_t</code>. For spheres, we
+			must also define <code>t1</code> and <code>t2</code> due to there being multiple intersections. For both intersections,
+			we must update the intersection information stored in the intersection parameter accordingly.
+		</p>
 
-		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
+		<p>
+			The triangle intersection algorithm that we implemented was the Möller Trumbore Algorithm from Lectures 9/10. The 
+			algorithm works by first calculating the edges of the triangles using the three points given in 
+			<code>mesh->positions</code> through <code>p2 - p1</code> and <code>p3 - p1</code>. Next, we calculate the 
+			vector from the triange's vertex to the ray's origin using <code>r.o - p1</code> and store it in <code>s</code>. We 
+			then take the cross product of the ray's direction and the triangle's second edge, storing the result in 
+			<code>s1</code>, and the cross product of <code>s</code>> and the triangle's first edge, storing the result in 
+			<code>s2</code>. Afterwards, we create a <code>Vector3D</code> where the first entry is the dot product of 
+			<code>s2</code> and <code>edge2</code>, the second entry is the dot product of <code>s1</code> and <code>s</code>,
+			and the third entry is the dot product of <code>s2</code> and the ray's direction. We find the normalization term to
+			be the one over the cross product of <code>s1</code> and <code>edge1</code> and multiply this by the Vector3D. This 
+			results in a Vector3D that stores t, the scalar distance between the ray's origin and the intersection point, and 
+			two barycentric coordinates. We can use these results to determine if there is an intersection by checking if 
+			<code>t &lt; r.min_t || t &gt; r.max_t || b1 &lt; 0 || b2 &lt; 0 || b1 + b2 &gt; 1</code> are all false. Ultimately,
+			we know that they do not intersect if the barycentric coordinates are less than 0, meaning they are outside of the 
+			triangle, and if t is between <code>min_t</code> and <code>max_t</code>.
+		</p>
+
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1 - cube.dae.png" width="400px"/>
+				  <figcaption>Rendering cube.dae</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1 - CBspheres_lambertian.dae.png" width="400px"/>
+				  <figcaption>Rendering CBspheres_lambertian.dae</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1 - cbgems.dae.png" width="400px"/>
+				  <figcaption>Rendering CBgems.dae</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="cornell.png" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="task1 - cbcoil.dae.png" width="400px"/>
+				  <figcaption>Rendering CBcoil.dae</figcaption>
 				</td>
 			  </tr>
 			</table>

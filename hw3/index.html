@@ -117,7 +117,7 @@
 			primitive pointers named a and b. Inside of the function, we check if the centroid of the bounding box along the 
 			bestAxis for a is less than the centroid of the bounding box along the bestAxis for b. Through this, we are able to
 			sort all of the primitives inside of the bounding box, helping us understand where to split for the left and right 
-			collection. Using this information, we create a <code>std::vector<Primitive *>::iterator</code> named midpoint
+			collection. Using this information, we create a <code>std::vector&lt;Primitive *&gt;::iterator</code> named midpoint
 			that finds the average of start plus the number of primitives to find the midpoint of our bounding box. Finally, we
 			set the left and right pointers of <code>node</code> equal to the recursive call of <code>construct_bvh</code>. 
 			For the left node, we pass in start, midpoint, and max_leaf_size. For the right node, we pass in midpoint, end, and
@@ -180,7 +180,87 @@
 		</div>
 
 		<h2>Part 3: Direct Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<p>
+			Our implementation of direct lighting with uniform hemisphere sampling first starts with the given starter code.
+			This code creates the world-to-object and object-to-world matrices, creates vectors <code>hit_p</code> and 
+			<code>w_out</code>, and determines the number of samples we want to take of our scene. Next, we implement our sampling 
+			loop. The loop runs <code>num_samples</code> times. We first obtain <code>w_i</code>, a randomly sampled vector above
+			the hit point. We then convert this vector to the world space by multipling it with the object-to-world matrix. Next,
+			we create a ray whose origin is the <code>hit_p + (EPS_F * w_i_world</code> and direction <code>w_i_world</code>. We 
+			set this as the origin to ensure is being cast at the hit point, but add the second part to avoid numerical 
+			precision issues. We then create an Intersection object named <code>worldIntersection</code>. Afterwards, we check 
+			if this instance's BVH intersects with the ray and store the result in <code>worldIntersection</code>. If there is 
+			an intersection, we use a Monte Carlo estimator to estimate how much light arrived at the intersection point. We 
+			calculate each part of the estimator and store it in a variable. From the equation in the spec, we can see that 
+			f_r(\mathbf{p}, \omega_j \to \omega_r) is the passed in intersection's BDSF using <code>f()</code>. 
+			L_i(\mathbf{p}, \omega_j) is the emission of <code>worldIntersection</code>'s BDSF. \cos\theta_j is the dot product 
+			of <code>w_i</code> and the normalized vector <code>(0, 0, 1)</code>. Finally, p(\omega_j) is <code>2.0 * PI</code>. 
+			We use all of these to compute the Monte Carlo Estimator and add the result to <code>L_out</code>. After we have 
+			finshed sampling, we divide <code>L_out</code> by the number of samples and return it.
+		</p>
+
+		<p>
+
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task3 - hemi low samp.png" width="400px"/>
+					<figcaption>Uniform Hemisphere Sampling with Low Rate</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - hemi high samp.png" width="400px"/>
+				  <figcaption>Uniform Hemisphere Sampling with High Rate</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task3 - import low samp.png" width="400px"/>
+					<figcaption>Uniform Importance Sampling with Low Rate</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - import high samp.png" width="400px"/>
+				  <figcaption>Uniform Importance Sampling with High Rate</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task3 - dragon_1.png" width="400px"/>
+					<figcaption>Dragon with 1 Light Ray and 1 Sample</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - dragon_4.png" width="400px"/>
+				  <figcaption>Dragon with 4 Light Rays and 1 Sample</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task3 - dragon_16.png" width="400px"/>
+					<figcaption>Dragon with 16 Light Rays and 1 Sample</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - dragon_64.png" width="400px"/>
+				  <figcaption>Dragon with 64 Light Rays and 1 Sample</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+
+		</p>
 
 		<h2>Part 4: Global Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

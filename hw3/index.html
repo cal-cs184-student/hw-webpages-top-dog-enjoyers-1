@@ -28,7 +28,7 @@
 	<body>
 		<div class="container">
 		<h1>CS184/284A Spring 2025 Homework 3 Write-Up</h1>
-		<div style="text-align: center;">Names: </div>
+		<div style="text-align: center;">Names: Isabella Alpert & Robert Nochez</div>
 
 		<br>
 
@@ -99,7 +99,85 @@
 		</div>
 		
 		<h2>Part 2: Bounding Volume Hierarchy</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<p>
+			Our BVH Construction algorithm begins with us looping through the given vector of primitives. Similar to the 
+			starter code, we build a BVH aggregate with a single leaf node, the root, that encloses all the primitives and 
+			count the number of primitives. Next we initialize a new BVHNode pointer named <code>node</code>, passing in the 
+			root bounding box we just created. Afterwards, we check if the number of primitives is less than or equal to the 
+			max leaf size. If true, then we know that we have a leaf node. We set <code>node->start = start</code> and 
+			<code>node->end = end</code>, updating the pointers of our BVHNode accordingly. Finally, we return <code>node</code>.
+			When this line of code is true, it also serves as the base case for our recursive call. If it is false, we need to 
+			perform the recursive algorithm to construct BVH. The first step of this process is dividing the primitives into a 
+			left and right collection. We do this by performing a series of conditionals using <code>bbox.extent.x</code>,
+			<code>bbox.extent.y</code>, and <code>bbox.extent.z</code>. We compare them amongst each other, searching for the 
+			best axis to split upon and store the axis that is greater than the other two in <code>double bestAxis</code>. Next, 
+			we use <code>std::sort</code>, an in-line function that sorts the elements in the range [first, last) in 
+			non-descending order. For this function, we pass in a comparison function object, <code>bestAxis</code>, and two 
+			primitive pointers named a and b. Inside of the function, we check if the centroid of the bounding box along the 
+			bestAxis for a is less than the centroid of the bounding box along the bestAxis for b. Through this, we are able to
+			sort all of the primitives inside of the bounding box, helping us understand where to split for the left and right 
+			collection. Using this information, we create a <code>std::vector<Primitive *>::iterator</code> named midpoint
+			that finds the average of start plus the number of primitives to find the midpoint of our bounding box. Finally, we
+			set the left and right pointers of <code>node</code> equal to the recursive call of <code>construct_bvh</code>. 
+			For the left node, we pass in start, midpoint, and max_leaf_size. For the right node, we pass in midpoint, end, and
+			max_leaf_size. Finally, we return node. For this implementation, we chose to use the midpoint of the bounding box 
+			as our heuristic it attempts to create a balanced tree by splitting the primitives at the midpoint of their 
+			bounding box along the longest axis, which we've entitled as bestAxis. By creating a balanced tree, we reduce 
+			tree depth, allowing for a faster treversal.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task2 - lucy.png" width="400px"/>
+					<figcaption>Rendering CBlucy.dae</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task2 - max.png" width="400px"/>
+				  <figcaption>Rendering maxplanck.dae</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			In the table below, we can see the differences in runtime when rendering CBlucy.dae and maxplanck.dae with and 
+			without using BVH acceleration. For the CBlucy.dae file, we can see that that without BVH acceleration, the image 
+			took 577.2773 seconds, nearly 10 minutes, to render, while it took only 0.0666 seconds with it. Likewise, for the 
+			maxplanck.dae file, it took 162.5172 seconds to render without acceleration and 0.0812 seconds with it. From this,
+			we can see that we can see that BVH acceleration dramatically reduces rendering time by not performining 
+			unnecessary intersection tests.  Without BVH, the ray tracing algorithm checks every primitive in the scene, leading 
+			to an exponential increase in rendering time as scene complexity grows. In contrast, BVH partitions the scene, 
+			allowing rays to quickly discard large groups of primitives that do not intersect. This results in speedups of 
+			several orders of magnitude.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task2 - unoptimized lucy.png" width="400px"/>
+					<figcaption>Unoptimized Lucy Runtime</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task2 - optimized lucy.png" width="400px"/>
+				  <figcaption>Optimized Lucy Runtime</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task2 - unoptimized max.png" width="400px"/>
+					<figcaption>Unoptimized Max Runtime</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task2 - optimized max.png" width="400px"/>
+				  <figcaption>Optimized Max Runtime</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 3: Direct Illumination</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

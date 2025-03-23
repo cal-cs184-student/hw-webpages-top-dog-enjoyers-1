@@ -344,22 +344,35 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task4 - indirect blob.png" width="400px"/>
+					<img src="task3 - sample 4.png" width="300px"/>
 					<figcaption>Blob Rendered with Global Illumination</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task3 - sample 4.png" width="400px"/>
+				  <img src="task3 - sample 4.png" width="300px"/>
 				  <figcaption>Dragon with 4 Light Rays and 1 Sample</figcaption>
 				</td>
+				<td style="text-align: center;">
+					<img src="task3 - sample 4.png" width="300px"/>
+					<figcaption>Dragon with 4 Light Rays and 1 Sample</figcaption>
+				  </td>
 			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The images below show the comparison between direct and indirect lighting.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task3 - sample 16.png" width="400px"/>
-					<figcaption>Dragon with 16 Light Rays and 1 Sample</figcaption>
+					<img src="task4 - direct.png" width="400px"/>
+					<figcaption>Spheres with Direct Lighting Only</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task3 - sample 64.png" width="400px"/>
-				  <figcaption>Dragon with 64 Light Rays and 1 Sample</figcaption>
+				  <img src="task4 - indirect.png" width="400px"/>
+				  <figcaption>Spheres with Indirect Lighting Only</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -367,7 +380,15 @@
 
 		<p>
 			The next two tables will show renderings of CBbunny.dae with isAccumBounces set equal to false and true, 
-			respectively, for max_ray_depths of 0, 1, 2, 3, 4, and 5.
+			respectively, for max_ray_depths of 0, 1, 2, 3, 4, and 5. We can see that in the images where isAccumBounces = true,
+			the second and third bounces are responsible for making the image brighter. By adding extra bounces, the indirect 
+			lighting adds depth and more variations in shading, allowing areas of the image that were previously dark to now 
+			have light. This is best seen in the bottom part of the rabbit. The third bounce of light adds minimal, but still 
+			noticable shading and dimension throughout the image. As we begin to increase the number of bounces from here, the 
+			changes become harder to notice. In contrast, in images where isAccumBounces = false, we can see that that each extra 
+			bounce darkens the image. For the second bounce, our image becomes much darker; the top of the rabbit is now mostly 
+			covered in shadows and the black light on the top becomes visible. For the third bounce, the image continues to dark 
+			and almost no light can be seen.
 		</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -431,6 +452,44 @@
 				<td style="text-align: center;">
 					<img src="task4 - true, m=5.png" width="300px"/>
 					<figcaption>isAccumBounces = true, m = 5</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The table of images below shows Russian Roulette rendering with max_ray_depth set to 0, 1, 2, 3, 4, and 100
+			with 1024 samples. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - russ_m=0.png" width="300px"/>
+					<figcaption>Russian Roulette, m = 0</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - russ_m=1.png" width="300px"/>
+				  <figcaption>Russian Roulette, m = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - russ_m=2.png" width="300px"/>
+					<figcaption>Russian Roulette, m = 2</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - russ_m=3.png" width="300px"/>
+					<figcaption>Russian Roulette, m = 3</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - true, m=4.png" width="300px"/>
+				  <figcaption>Russian Roulette, m = 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - russ_m=100.png" width="300px"/>
+					<figcaption>Russian Roulette, m = 100</figcaption>
 				  </td>
 			  </tr>
 			</table>

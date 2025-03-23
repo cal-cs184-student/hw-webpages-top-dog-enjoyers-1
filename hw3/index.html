@@ -266,7 +266,7 @@
 			different amounts of light rays and one sample. The image is always slightly pixelated, most likely due to the 
 			fact that we are only sampling one pixel so it is never smoothed out through averaging in an anti-aliasing-like effect.
 			Through this, we observe that noise levels in soft shadows decrease as the number of samples per light increases.
-			Despite this, we can clearly see the noise levels decrease as we go from using 1 lighr ray, to 4, to 16, and finally to 64,
+			Despite this, we can clearly see the noise levels decrease as we go from using 1 light ray, to 4, to 16, and finally to 64,
 			creating a smoother image overall.
 		</p>
 
@@ -304,7 +304,122 @@
 		</p>
 
 		<h2>Part 4: Global Illumination</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=0.png" width="300px"/>
+					<figcaption>isAccumBounces = false, m = 0</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - false, m=1.png" width="300px"/>
+				  <figcaption>isAccumBounces = false, m = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=2.png" width="300px"/>
+					<figcaption>isAccumBounces = false, m = 2</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=3.png" width="300px"/>
+					<figcaption>isAccumBounces = false, m = 3</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - false, m=4.png" width="300px"/>
+				  <figcaption>isAccumBounces = false, m = 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=5.png" width="300px"/>
+					<figcaption>isAccumBounces = false, m = 5</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=0.png" width="300px"/>
+					<figcaption>isAccumBounces = true, m = 0</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - false, m=1.png" width="300px"/>
+				  <figcaption>isAccumBounces = true, m = 1</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=2.png" width="300px"/>
+					<figcaption>isAccumBounces = true, m = 2</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=3.png" width="300px"/>
+					<figcaption>isAccumBounces = true, m = 3</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - false, m=4.png" width="300px"/>
+				  <figcaption>isAccumBounces = true, m = 4</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - false, m=5.png" width="300px"/>
+					<figcaption>isAccumBounces = true, m = 5</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			In the table below, we can see how the rendered views of a scene vary as we change the sample-per-pixel 
+			rates. The images below all have four light rays (l=4) with sample rates of 1, 2, 4, 8, 16, 64, and 1024 
+			respectively. In general, we can see that as we increase the sample rates, the noise level decreases. A higher
+			sample rate reduces variances, leading to a smoother, less noisy image. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - s=1, l=4.png" width="300px"/>
+					<figcaption>Various Sample-Per-Pixel Rates: s = 1</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - s=2, l=4.png" width="300px"/>
+				  <figcaption>Various Sample-Per-Pixel Rates: s = 2</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - s=4, l=4.png" width="300px"/>
+					<figcaption>Various Sample-Per-Pixel Rates: s = 4</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - s=8, l=4.png" width="300px"/>
+					<figcaption>Various Sample-Per-Pixel Rates: s = 8</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task4 - s=16, l=4.png" width="300px"/>
+				  <figcaption>Various Sample-Per-Pixel Rates: s = 16</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - s=64, l=4.png" width="300px"/>
+					<figcaption>Various Sample-Per-Pixel Rates: s = 64</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - s=1024, l=4.png" width="300px"/>
+					<figcaption>Various Sample-Per-Pixel Rates: s = 1024</figcaption>
+				  </td>
+			   </tr>
+			</table>
+		</div>
 
 		<h2>Part 5: Adaptive Sampling</h2>
 		
@@ -319,10 +434,10 @@
 			radiance vector and add one to <code>num_samples</code>. Afterwards, we need to compute the illuminance and update our 
 			running statistics. We do this by calling <code>illum()</code> on our sampled radiance, add this value to <code>s1</code>, 
 			and add this value squared to <code>s2</code>. Now, we need to check the convergence of every <code>samplesPerBatch</code>
-			samples. We do this by checking if <code>num_samples % samplesPerBatch == 0</code> and if we've sampled more than once. If 
-			true, we take the mean, variance, and standard deviation of our samples. We then create a 95% confidence interval. If the 
-			pixel has converged, we stop early. Finally, after we have finished sampling, we update the pixel in the sample buffer and 
-			increase the sample count buffer. 
+			samples instead of every point to cut down on computation. We do this by checking if 
+			<code>num_samples % samplesPerBatch == 0</code> and if we've sampled more than once. If true, we take the mean, variance, 
+			and standard deviation of our samples. We then create a 95% confidence interval. If the pixel has converged, we stop early. 
+			Finally, after we have finished sampling, we update the pixel in the sample buffer and increase the sample count buffer. 
 		</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">

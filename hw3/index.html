@@ -544,6 +544,10 @@
 		<h2>Part 5: Adaptive Sampling</h2>
 		
 		<p>
+			Adaptive sampling is an algorithm where the number of samples taken is dynamically adjusted. Instead of using a fixed,
+			uniform sampling strategy, adaptive sampling allows us to decrease noise by increasing the number of samples per pixel 
+			in areas where we need higher numbers of samples and decreasing the number of samples per pixels in areas that are less 
+			noisy. It solves the issue of using a fixed, high number of samples per pixel, which can be computationally intensive.
 			Our implementation for this part starts with us defining several variables, including <code>Vector3D radiance(0, 0, 0)</code>
 			for the accumulated radiance, <code>int num_samples = 0</code> for the actual samples taken, <code>double s1 = 0.0</code> for 
 			the sum of the illuminance values, and <code>double s2 = 0.0</code> for the sum of squared illuminance. Next, we loop 

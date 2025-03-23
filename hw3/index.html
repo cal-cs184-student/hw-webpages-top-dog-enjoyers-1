@@ -193,8 +193,8 @@
 			if this instance's BVH intersects with the ray and store the result in <code>worldIntersection</code>. If there is 
 			an intersection, we use a Monte Carlo estimator to estimate how much light arrived at the intersection point. We 
 			calculate each part of the estimator and store it in a variable. From the equation in the spec, we can see that 
-			\( f_r(\p, \omega_j \to \omega_r) \) is the passed in intersection's BDSF using <code>f()</code>. 
-			\( L_i(\p, \omega_j) \) is the emission of <code>worldIntersection</code>'s BDSF. \( \cos\theta_j \) is the dot product 
+			\( f_r(\ mathbf{p}, \omega_j \to \omega_r) \) is the passed in intersection's BDSF using <code>f()</code>. 
+			\( L_i(\mathbf{p}, \omega_j) \) is the emission of <code>worldIntersection</code>'s BDSF. \( \cos\theta_j \) is the dot product 
 			of <code>w_i</code> and the normalized vector <code>(0, 0, 1)</code>. Finally, \( p(\omega_j) \) is <code>2.0 * PI</code>. 
 			We use all of these to compute the Monte Carlo Estimator and add the result to <code>L_out</code>. After we have 
 			finshed sampling, we divide <code>L_out</code> by the number of samples and return it.
@@ -216,7 +216,7 @@
 			named <code>worldIntersection</code>. Afterwards, we check if this instance's BVH intersects with the ray and store the 
 			result in <code>worldIntersection</code> and check if <code>w_i_obj.z >= 0</code>, checking if the light is behind the 
 			surface at the hit point. If true, we use a Monte Carlo estimator to estimate how much light has arrived at the intersection 
-			point. rom the equation in the spec, we can see that \( f_r(\p, \omega_j \to \omega_r) \) is the passed in intersection's 
+			point. rom the equation in the spec, we can see that \( f_r(\mathbf{p}, \omega_j \to \omega_r) \) is the passed in intersection's 
 			BDSF using <code>f()</code>. \( \cos\theta_j \) is the dot product of <code>w_i_obj</code> and the normalized vector 
 			<code>(0, 0, 1)</code>. Finally, we use <code>f_r * radiance * cos_theta_i / pdf</code> to compute the Monte Carlo estimator
 			and add it to <code>L_out</code>. After we have fully sampled this light <code>num_samples</code> times, we divide 
@@ -250,7 +250,12 @@
 		</div>
 
 		<p>
-			In the table below, we can see the 
+			In the table below, we can see the differences in noise levels in the soft shadows when rendering the dragon using
+			different amounts of light rays and one sample. The image is always slightly pixelated, most likely due to the 
+			fact that we are only sampling one pixel so it is never smoothed out through averaging in an anti-aliasing-like effect.
+			Through this, we observe that noise levels in soft shadows decrease as the number of samples per light increases.
+			Despite this, we can clearly see the noise levels decrease as we go from using 1 lighr ray, to 4, to 16, and finally to 64,
+			creating a smoother image overall.
 		</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">

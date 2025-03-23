@@ -40,7 +40,21 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		
+		<p>
+			Throughout this homework, we learned how to implement the core processes of a physically-based renderer using a pathtracing 
+			algorithm. We first accomplished this through ray generation and scene intersection, where we generated rays via sampling 
+			and implemented certain intersections with different geometries--in this case, spheres and triangles. Next, we implemented 
+			Bounding Volume Hierarchy or BVH. We did this through implementing a BVH construction algorithm. This allows us to keep 
+			track of all of the primitives in a scene, resulting in increased traversal efficiency. In Part 3, we implemented direct 
+			illumination and in Part 4, we implemented global illumination. These two tasks taught us how to light objects that have a 
+			diffuse BSDF. We also implemented heuristics like Russian Roulette and compared uniform hemisphere sampling and importance 
+			lighting sampling to see how different methodologies result in different lighting effects. Finally, in Part 5, we implemented 
+			adaptive sampling, a heuristic that uses a fixed, high number of samples per pixel. As it concentrates the samples in the 
+			more difficult parts of the image, allowing us to decrease noise without uniformly sampling the scene. By completing this 
+			homework, we learned different tactics and ways to render images while also noticing the drawbacks of each tactic in terms of 
+			performance, noise, and quality.
+		</p>
 
 		<h2>Part 1: Ray Generation and Scene Intersection</h2>
 		
@@ -81,15 +95,15 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task1 - cbcoil.dae.png" width="400px"/>
+					<img src="task1 - cbcoil.dae.png" width="300px"/>
 					<figcaption>Rendering CBcoil.dae</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task1 - CBspheres_lambertian.dae.png" width="400px"/>
+				  <img src="task1 - CBspheres_lambertian.dae.png" width="300px"/>
 				  <figcaption>Rendering CBspheres_lambertian.dae</figcaption>
 				</td>
 				<td style="text-align: center;">
-					<img src="task1 - cbgems.dae.png" width="400px"/>
+					<img src="task1 - cbgems.dae.png" width="300px"/>
 					<figcaption>Rendering CBgems.dae</figcaption>
 				  </td>
 			  </tr>

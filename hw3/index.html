@@ -306,7 +306,68 @@
 		<h2>Part 4: Global Illumination</h2>
 		
 		<p>
+			Our implementation for the indirect lighting function begins with us setting up the coordinate space. This involves
+			creating <code>L_out</code>, the object-to-world and world-to-object matrices, and the vectors <code>hit_p</code>
+			and <code>w_out</code>. From here, our code splits into two main parts.The first part checks if 
+			<code>!this->isAccumBounces</code>. If true, we first check if the depth of our ray r is one. If so, we return 
+			<code>one_bounce_radiance(r, isect)</code>. Next, we set our Russian Roulette probability to any small 
+			probability--we chose 0.3. We then check if with a coin flip and if the depth is greater than 1, if Russian 
+			Roulette terminates our code early. If it does, we simply return <code>L_out</code>. If it doesn't we create 
+			vector <code>w_in</code> and double <code>pdf</code>, which are defined when we call 
+			<code>isect->bdsf->sample_f(w_out, &w_in, &pdf)</code>. We transform <code>w_in</code> by multipling it by 
+			the object-to-world matrix. We then create a new ray, setting its origin to <code>hit_p + ESP_F * w_in_world</code>, 
+			its direction to <code>w_in_world</code>, and its depth to <code>r.depth</code>. We create a new intersection and 
+			define it when we check if the BVH intersects with the new ray. If it does, we change the depth of our new ray to 
+			<code>r.depth - 1</code>. We create a Vector3D named <code>indirect_radiance</code> that stores the recursive call 
+			of <code>at_least_one_bounce_radiance(new_ray, new_isect)</code>. Finally, we check if isAccumBounces is true or if 
+			<code>r.depth != max_ray_depth</code>. If true, we calculate <code>sample_f</code> times the indirect radiance times 
+			the absolute cosine of <code>w_in</code> divided by pdf and add it to L_out. Moving on to the second main part of our 
+			code that occurs when <code>!this->isAccumBounces</code> is false. We first check if <code>r.depth == 0</code> 
+			and if it is, we return an empty Vector3D. when then check for direct lighting, which occurs if isAccumBounces or if 
+			<code>r.depth == 1</code>. If true, we add <code>one_bounce_radiance(r, isect)</code> to <code>L_out</code>. Next, 
+			we check the recursion depth cut-off; if <code>r.depth &lt; 2</code>, we return <code>L_out</code>. We perform 
+			the same Russian Roulette algorithm as mentioned in the first part. Likewise, we perform the same steps for creating 
+			and defining <code>w_in</code>, <code>pdf</code>, <code>new_ray</code>, and <code>new_isect</code>. We check if the 
+			BVH intersects the new_ray. If it does, we create <code>indirect_radiance</code> and set it equal to
+			<code>at_least_one_bounce_radiance(new_ray, new_isect)</code>. We only add the result to the output if we are 
+			accumulating all bounces or if we've reached the <code>max_ray_depth</code>. If either of these conditions are true,
+			we perform calculate <code>sample_f</code> times the indirect radiance times the absolute value of cosine of <code>w_in</code>
+			divided by pdf times <code>1 - rr_prob</code>. Finally, we return L_out. This entire algorithm is stored in 
+			<code>at_least_one_bounce_radiance()</code>. We also changed <code>est_radiance_global_illumination()</code> by 
+			checking if <code>!this->isAccumBounces</code> is true. If true, we add 
+			<code>this->at_least_one_bounce_radiance(r, isect)</code> to <code>L_out</code>. If false, we add
+			<code>this->zero_bounce_radiance(r, isect) + this->at_least_one_bounce_radiance(r, isect)</code> to <code>L_out</code>.
+			Finally, we return <code>L_out</code>
+		</p> 
 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - indirect blob.png" width="400px"/>
+					<figcaption>Blob Rendered with Global Illumination</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - sample 4.png" width="400px"/>
+				  <figcaption>Dragon with 4 Light Rays and 1 Sample</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task3 - sample 16.png" width="400px"/>
+					<figcaption>Dragon with 16 Light Rays and 1 Sample</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task3 - sample 64.png" width="400px"/>
+				  <figcaption>Dragon with 64 Light Rays and 1 Sample</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The next two tables will show renderings of CBbunny.dae with isAccumBounces set equal to false and true, 
+			respectively, for max_ray_depths of 0, 1, 2, 3, 4, and 5.
 		</p>
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
@@ -387,35 +448,35 @@
 			  <tr>
 				<td style="text-align: center;">
 					<img src="task4 - s=1, l=4.png" width="300px"/>
-					<figcaption>Various Sample-Per-Pixel Rates: s = 1</figcaption>
+					<figcaption>Sample-Per-Pixel Rates = 1</figcaption>
 				  </td>
 				<td style="text-align: center;">
 				  <img src="task4 - s=2, l=4.png" width="300px"/>
-				  <figcaption>Various Sample-Per-Pixel Rates: s = 2</figcaption>
+				  <figcaption>Sample-Per-Pixel Rates = 2</figcaption>
 				</td>
 				<td style="text-align: center;">
 					<img src="task4 - s=4, l=4.png" width="300px"/>
-					<figcaption>Various Sample-Per-Pixel Rates: s = 4</figcaption>
+					<figcaption>Sample-Per-Pixel Rates = 4</figcaption>
 				  </td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 					<img src="task4 - s=8, l=4.png" width="300px"/>
-					<figcaption>Various Sample-Per-Pixel Rates: s = 8</figcaption>
+					<figcaption>Sample-Per-Pixel Rates = 8</figcaption>
 				  </td>
 				<td style="text-align: center;">
 				  <img src="task4 - s=16, l=4.png" width="300px"/>
-				  <figcaption>Various Sample-Per-Pixel Rates: s = 16</figcaption>
+				  <figcaption>Sample-Per-Pixel Rates = 16</figcaption>
 				</td>
 				<td style="text-align: center;">
 					<img src="task4 - s=64, l=4.png" width="300px"/>
-					<figcaption>Various Sample-Per-Pixel Rates: s = 64</figcaption>
+					<figcaption>Sample-Per-Pixel Rates = 64</figcaption>
 				  </td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
 					<img src="task4 - s=1024, l=4.png" width="300px"/>
-					<figcaption>Various Sample-Per-Pixel Rates: s = 1024</figcaption>
+					<figcaption>Sample-Per-Pixel Rates = 1024</figcaption>
 				  </td>
 			   </tr>
 			</table>

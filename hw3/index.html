@@ -209,11 +209,11 @@
 			create <code>Vector3D w_i</code>, <code>double distToLight</code>, and <code>double pdf</code>, variables that will 
 			all be defined when we pass them into <code>sample_L()</code>. <code>sample_L</code> works by sampling the light, outputting
 			that light's radiance, and then defining the three previously mentioned variables. As <code>w_i</code> is now in the world 
-			space, we multiply it by the world-to-object matrix. Next, we create a ray whose origin is <code>hit_p + (EPS_F * w_i_obj</code>
-			and direction <code>w_i_obj</code>, following a similar process and reasoning to the ray created in uniform hemisphere 
-			sampling. However, for this ray, we set <code>ray.max_t = distToLight</code> and <code>ray.min_t = EPS_F - distToLight</code> 
+			space, we multiply it by the world-to-object matrix. Next, we create a ray whose origin is <code>hit_p + (EPS_F * w_i</code>
+			and direction <code>w_i</code>, following a similar process and reasoning to the ray created in uniform hemisphere 
+			sampling. However, for this ray, we set <code>ray.max_t = distToLight - EPS_F</code> and <code>ray.min_t = EPS_F</code> 
 			to ensure the hit point is in a shadow with respect to the current light source.  We then create an Intersection object
-			named <code>worldIntersection</code>. Afterwards, we check if this instance's BVH intersects with the ray and store the 
+			named <code>worldIntersection</code>. Afterwards, we check if this instance's BVH does not intersect with the ray and store the 
 			result in <code>worldIntersection</code> and check if <code>w_i_obj.z >= 0</code>, checking if the light is behind the 
 			surface at the hit point. If true, we use a Monte Carlo estimator to estimate how much light has arrived at the intersection 
 			point. rom the equation in the spec, we can see that \( f_r(\mathbf{p}, \omega_j \to \omega_r) \) is the passed in intersection's 
@@ -238,11 +238,11 @@
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task3 - import low samp.png" width="400px"/>
+					<img src="task3 - importance low samp.png" width="400px"/>
 					<figcaption>Uniform Importance Sampling with Low Rate</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task3 - import high samp.png" width="400px"/>
+				  <img src="task3 - importance high samp.png" width="400px"/>
 				  <figcaption>Uniform Importance Sampling with High Rate</figcaption>
 				</td>
 			  </tr>
@@ -262,21 +262,21 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task3 - dragon_1.png" width="400px"/>
+					<img src="task3 - sample 1.png" width="400px"/>
 					<figcaption>Dragon with 1 Light Ray and 1 Sample</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task3 - dragon_4.png" width="400px"/>
+				  <img src="task3 - sample 4.png" width="400px"/>
 				  <figcaption>Dragon with 4 Light Rays and 1 Sample</figcaption>
 				</td>
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-					<img src="task3 - dragon_16.png" width="400px"/>
+					<img src="task3 - sample 16.png" width="400px"/>
 					<figcaption>Dragon with 16 Light Rays and 1 Sample</figcaption>
 				  </td>
 				<td style="text-align: center;">
-				  <img src="task3 - dragon_64.png" width="400px"/>
+				  <img src="task3 - sample 64.png" width="400px"/>
 				  <figcaption>Dragon with 64 Light Rays and 1 Sample</figcaption>
 				</td>
 			  </tr>

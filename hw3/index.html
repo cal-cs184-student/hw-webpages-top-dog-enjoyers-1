@@ -88,12 +88,10 @@
 				  <img src="task1 - CBspheres_lambertian.dae.png" width="400px"/>
 				  <figcaption>Rendering CBspheres_lambertian.dae</figcaption>
 				</td>
-			  </tr>
-			  <tr>
 				<td style="text-align: center;">
-				  <img src="task1 - cbgems.dae.png" width="400px"/>
-				  <figcaption>Rendering CBgems.dae</figcaption>
-				</td>
+					<img src="task1 - cbgems.dae.png" width="400px"/>
+					<figcaption>Rendering CBgems.dae</figcaption>
+				  </td>
 			  </tr>
 			</table>
 		</div>
@@ -295,21 +293,49 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h2>Part 5: Adaptive Sampling</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h2>(Optional) Part 6: Extra Credit Opportunities</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		<p>
+			Our implementation for this part starts with us defining several variables, including <code>Vector3D radiance(0, 0, 0)</code>
+			for the accumulated radiance, <code>int num_samples = 0</code> for the actual samples taken, <code>double s1 = 0.0</code> for 
+			the sum of the illuminance values, and <code>double s2 = 0.0</code> for the sum of squared illuminance. Next, we loop 
+			number of samples allocated (<code>ns_aa</code>) times. In this loop, we generate a sample from gridSampler, normalize the 
+			X and Y coordinates of the sample, and then generate a ray from the camera using the normalized coordinates. We set the depth 
+			of this ray to <code>this->max_ray_depth</code>. Next, we need to compute the radiance for this sample. We do this using 
+			<code>est_radiance_global_illumination</code>, passing in <code>sample_ray</code>. We add this sampled radiance to our total 
+			radiance vector and add one to <code>num_samples</code>. Afterwards, we need to compute the illuminance and update our 
+			running statistics. We do this by calling <code>illum()</code> on our sampled radiance, add this value to <code>s1</code>, 
+			and add this value squared to <code>s2</code>. Now, we need to check the convergence of every <code>samplesPerBatch</code>
+			samples. We do this by checking if <code>num_samples % samplesPerBatch == 0</code> and if we've sampled more than once. If 
+			true, we take the mean, variance, and standard deviation of our samples. We then create a 95% confidence interval. If the 
+			pixel has converged, we stop early. Finally, after we have finished sampling, we update the pixel in the sample buffer and 
+			increase the sample count buffer. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task5 - bunny.png" width="400px"/>
+					<figcaption>Bunny with s = 2048</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task5 - bunny rate.png" width="400px"/>
+				  <figcaption>Sampling Rate of Bunny</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task5 - spheres.png" width="400px"/>
+					<figcaption>Spheres with s = 2048</figcaption>
+				  </td>
+				<td style="text-align: center;">
+				  <img src="task5 - spheres rate.png" width="400px"/>
+				  <figcaption>Sampling Rate of Spheres</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
 		</div>
 	</body>
 </html>

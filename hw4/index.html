@@ -57,7 +57,7 @@
 			<img src="task1 - showCloth.png" alt="scene/pinned2.json" style="width:70%"/>
 		</figure>
 
-		<p>The grid of images bselow shows what the wireframe looks like with no constaints, without any shearing constraints, with only shearing constaints, and with all constraints.</p>
+		<p>The grid of images below shows what the wireframe looks like with no constaints, without any shearing constraints, with only shearing constaints, and with all constraints.</p>
 	
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -172,7 +172,64 @@
 		</figure>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<p>
+			When handling collisions, we needed to first add update our <code>simulate()</code> method to ensure that it knew how 
+			to handle collisions with other primitives. This was accomplished by looping through all of the point masses, and then
+			looping through every collision object. For each collision object, we check if it collides with a point mass by calling 
+			<code>collide()</code>. We implemented collisions with spheres first. We did this by computing where the point masss
+			intersects with the sphere by taking the norm of the origin minus the position of the point mass. Next, we check if 
+			the intersection point is less than the radius. If it is, we know that clipping will occur, so we must adjust the 
+			point accordingly. We do this by calculating the tangent of the intersection point. Using the tangent, we calculate 
+			the correction vector. We scale the correction vector by <code>1 - friction</code> and add it to the last position of the 
+			point mass, storing the result in the point mass's current position. Functionally, this causes the point mass's 
+			position to update to the correct location, ensuring it is not clipping through the sphere. Our implementation for 
+			planes is very similar. We calculate how far the point mass was from the plane at the last position and at the current 
+			position, and take the dot product of each to see what side of the plane it is on. If the result of multiplying the last 
+			and current position is less than or equal to 0, then we know the point has crossed the plane. If this is the case, we 
+			find the direction that the point mass is moving in. Next, we calculate the tangent vector and add the 
+			<code>SURFACE_OFFSET</code> to ensure that the point is slightly above the plane. We then calculate the correction vector 
+			to ensure that we are moving the point to a position where it does not intersect with the plane. Like with the sphere, we 
+			scale the correction vector by <code>1 - friction</code> and add the result to the point mass's last position, storing it 
+			inside the point mass's current position.
+		</p>
+
+		<p>
+			The images below show the results of changing the spring constant on the cloth. We can see that when
+			<code>ks = 500</code>, the cloth is extremely floppy. It conforms to the shape of the sphere and has the most folds 
+			and wrinkles when compared to the others. When <code>ks = 5000</code>, the cloth begins to gain some rigidity. While 
+			it still has many folds and wrinkles, it conforms to the shape of the sphere much less, maintaining some of its own
+			structure. Finally, when we set <code>ks = 50000</code>, we can see that the cloth is extremely rigid. Out of the 
+			three images, it changes shape the least, barely conforming to the shape of the sphere, having the fewest amount of 
+			wrinkles and folds, and overall looking more stiff.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task3 - ks500.png" width="300px"/>
+				  <figcaption><code>ks</code> = 500</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task3 - ks5000.png" width="300px"/>
+				  <figcaption><code>ks</code> = 5000</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task3 - ks50000.png" width="300px"/>
+					<figcaption><code>ks</code> = 50000</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			In the image below, we can see the cloth at rest on the plane using normal shaders.
+		</p>
+
+		<figure>
+			<img src="task3 - plane.png" alt="Cloth on Plane" style="width:70%"/>
+		</figure>
 
 		<h2>Part 4: Handling self-collisions</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

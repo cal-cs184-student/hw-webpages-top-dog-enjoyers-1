@@ -102,14 +102,24 @@
 
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				<tr>
+					<td style="text-align: center;">
+					  <img src="task2 - KSlowPin2.png" width="400px"/>
+					  <figcaption>Low Spring Constant for Pinned 2 (<code>ks</code> = 500 N/m)</figcaption>
+					</td>
+					<td style="text-align: center;">
+					  <img src="task2 - KShighPin2.png" width="400px"/>
+					  <figcaption>High Spring Constant for Pinned 2 (<code>ks</code> = 50000 N/m)</figcaption>
+					</td>
+				  </tr>
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="task2 - KSlow.png" width="400px"/>
-				  <figcaption>Low Spring Constant (<code>ks</code> = 500 N/m)</figcaption>
+				  <figcaption>Low Spring Constant for Pinned 4 (<code>ks</code> = 500 N/m)</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="task2 - KShigh.png" width="400px"/>
-				  <figcaption>High Spring Constant (<code>ks</code> = 50000 N/m)</figcaption>
+				  <figcaption>High Spring Constant for Pinned 4 (<code>ks</code> = 50000 N/m)</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -128,12 +138,12 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task2 - densityLow.png" width="400px"/>
-				  <figcaption>Low Density (Density = 1 g/cm^2)</figcaption>
+				  <img src="task2 - densityLowPin2.png" width="400px"/>
+				  <figcaption>Low Density for Pinned 2 (Density = 1 g/cm^2)</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task2 - densityHigh.png" width="400px"/>
-				  <figcaption>High Density (Density = 150 g/cm^2)</figcaption>
+				  <img src="task2 - densityHighPin2.png" width="400px"/>
+				  <figcaption>High Density for Pinned 2 (Density = 150 g/cm^2)</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -151,12 +161,12 @@
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="task2 - dampingLow.png" width="400px"/>
-				  <figcaption>Low Damping (Damping = 0%)</figcaption>
+				  <img src="task2 - dampingLowPin2.png" width="400px"/>
+				  <figcaption>Low Damping for Pinned 2 (Damping = 0%)</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="task2 - dampingHigh.png" width="400px"/>
-				  <figcaption>High Damping (Damping = 1%)</figcaption>
+				  <img src="task2 - dampinghighPin2.png" width="400px"/>
+				  <figcaption>High Damping for Pinned 2 (Damping = 1%)</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -309,8 +319,156 @@
 		</div>
 
 		<h2>Part 5: Shaders</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+			A shader program is a program that controls how things are rendered. Specifically, it uses vertex and fragment shaders 
+			that work together in the rendering pipeline to take models and add a stylized layer of rendering to them. Vertex 
+			shaders work for each vertex in a 3D model. They pass in information such as color, normal direction, and tecture coordinates. 
+			They also determine how each vertex should look if we apply a transformation to it. Next, we have fragment shaders. 
+			Fragment shaders work with individual pixels in a 3D model. They use lighting, material properties, and texture to decide
+			how each pixel should appear. When combined, they create visual effects by determining how light interacts with materials.
+		</p>
 
+		<p>
+			Blinn Phong shading is a model that simulates soft lighting, shading, and shininess. It works by combining three 
+			different lighting models. The first is ambient lighting, which is the base color of an object. This helps to simulate 
+			indirect light scattered and is visible even in shadow. Next, we have diffuse lighting. Diffuse lighting simulates 
+			light hitting the surface of a 3D model. It is stronger when it hits the model directly and weaker as we move further 
+			away from the light source, creating a more realistic lighting feel. Finally, we have specular lighting. This creates 
+			a shiny light that reflects off of a model's surface. By adjusting the different levels for each of the three sources of 
+			lighting, we can create different levels of light and shininess in our Blinn Phong shading.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - ambient.png" width="300px"/>
+				  <figcaption>Ambient Lighting Only</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - diffuse.png" width="300px"/>
+				  <figcaption>Diffuse Lighting Only</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task5 - specular.png" width="300px"/>
+					<figcaption>Specular Lighting Only</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<figure>
+			<img src="task5 - blinnPhong.png" alt="Blinn Phong" style="width:70%"/>
+			<figcaption>Full Blinn Phong Shading</figcaption>
+		</figure>
+
+		<p>
+			The images below show our sphere and cloth with a custom texture. We chose to use an image of Jack Black in the 
+			Minecraft Movie.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - ambient.png" width="300px"/>
+				  <figcaption>Custom Texture on Cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - diffuse.png" width="300px"/>
+				  <figcaption>Custom Texture on Sphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task5 - specular.png" width="300px"/>
+					<figcaption>Custom Texture Draped</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - regBumpCloth.png" width="300px"/>
+				  <figcaption>Bump Mapping on Cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - regBumpCloth.png" width="300px"/>
+				  <figcaption>Bump Mapping on Sphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task5 - regBumpDrape.png" width="300px"/>
+					<figcaption>Bump Mapping Draped</figcaption>
+				  </td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - regDispCloth.png" width="300px"/>
+				  <figcaption>Displacement Mapping on Cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - regDispSphere.png" width="300px"/>
+				  <figcaption>Displacement Mapping on Sphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task5 - regDispDrape.png" width="300px"/>
+					<figcaption>Displacement Mapping Draped</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The images below show our sphere and cloth with Mirror Shading.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - mirrorCloth.png" width="300px"/>
+				  <figcaption>Mirror Texture on Cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - mirrorSphere.png" width="300px"/>
+				  <figcaption>Mirror Texture on Sphere</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task5 - mirrorDraped.png" width="300px"/>
+					<figcaption>Mirror Texture Draped</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The images below show the custom shader that we implemented for extra credit. For this task, we decided to add 
+			color controls to our Blinn Phong shader. Using the color wheel, we are able to set the model to be any color 
+			we want it to be. We implemented this by taking copying our code from the Blinn Phong shader. We then added multiplied
+			<code>u_color.rgb</code> by the sum of the ambient and diffuse lighting and added the specular lighting at the end. We
+			stored the result in the xyz component of <code>out_color</code> and set <code>out_color.a = u_color.a</code>.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task5 - colorShading1.png" width="400px"/>
+				  <figcaption>Custom Texture on Cloth</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task5 - colorShading2.png" width="400px"/>
+				  <figcaption>Custom Texture on Sphere</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 		
 		</div>
 	</body>

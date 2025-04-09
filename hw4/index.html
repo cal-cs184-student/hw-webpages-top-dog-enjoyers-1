@@ -32,7 +32,7 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw4/">https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw4/</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw4/">https://cal-cs184-student.github.io/hw-webpages-top-dog-enjoyers-1/hw4/</a>
 
 		<br>
 
@@ -64,11 +64,11 @@
 			  <tr>
 				<td style="text-align: center;">
 				  <img src="task1 - withoutAll.png" width="400px"/>
-				  <figcaption>With No Constaints</figcaption>
+				  <figcaption>With No Constraints</figcaption>
 				</td>
 				<td style="text-align: center;">
 				  <img src="task1 - withoutShearing.png" width="400px"/>
-				  <figcaption>Without Shearing Constaints</figcaption>
+				  <figcaption>Without Shearing Consrtaints</figcaption>
 				</td>
 			  </tr>
 			  <tr>
@@ -78,7 +78,7 @@
 				</td>
 				<td style="text-align: center;">
 					<img src="task1 - withAll.png" width="400px"/>
-					<figcaption>With All Constaints</figcaption>
+					<figcaption>With All Constraints</figcaption>
 				</td>
 			  </tr>
 			</table>
@@ -232,24 +232,86 @@
 		</figure>
 
 		<h2>Part 4: Handling self-collisions</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+		<p>
+			In order to implement self-collisions, we first needed to create a hash function with a good distribution. In order 
+			to ensure that our hash function is evenly distributed, we calculate w, h, and t respectively and use <code>fmod()</code>
+			to ensure that they are truncated to its coordinates in the closest 3D box. We then use these modded values in order 
+			to create a unique hash key by multiplying them together with random constants. Next, we implement our 
+			<code>self_collide()</code> function. We call our hashing function and check to see if that hash key is already stored 
+			in the end of our map. If it is, we exit out of function. If not, we create a correction vector and a counter. We loop 
+			through every point mass, and if we are not at our original, starting point mass, we calculate the distance from the 
+			new point mass to the old point mass. If they are touching each other, we then calculate the direction, use the direction, 
+			thicknes, and distance to calculate the correction vector, and increment our count by one. After we are finished looping 
+			through all of the point masses, we check to see if there were any collisions (as in, our counter is greater than 0). If there 
+			were, we divide our correction vector by count times the number of simulation steps and add the correction vector to the 
+			point mass's current position, updating its location. Next, inside of our <code>build_spatial_map()</code> function, we 
+			loop through all of the point masses, calculating their hash kets. If we find that their hash key is at the end of the map,
+			we set the map's value at that key equal to a new point mass vector. Finally, we add the point nass to the end of our map 
+			at that hash key. This all comes together in our <code>simulate()</code> function. Inside of simulate, we call 
+			<code>build_spatial_map()</code>. Then, we loop through all of the point masses and call <code>self_collide</code> on each 
+			one. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4 - early.png" width="300px"/>
+				  <figcaption>Early Stage in Self-Collision</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task4 - mid.png" width="300px"/>
+				  <figcaption>Middle Stage in Self-Collision</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - final.png" width="300px"/>
+					<figcaption>Final Stage in Self-Collision</figcaption>
+				  </td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The grid of images below show what occurs in our self-collision simulation as we change our values for density 
+			and the spring constant. First, when we use lower values for density, we can see that our cloth folds very smoothly, 
+			with minimal excess wrinkles. The shape is much stiffer and rigid, holding its shape better. In contrast, when we use 
+			higher values for density, we can see that our cloth has almost no rigidity. It has folded over itself many times,
+			resulting in a resting state that is extremely wrinkled, crumpled up, and lacks any smoothness. Likewise, when we 
+			use a lower value for the spring constant, we can see that our cloth also becomes more wrinkled, with many distinct 
+			folds. In contrast, a higher value for the spring constant results in a cloth that is very smooth and rigid, maintaining
+			much of its original shape.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task4 - densityLow.png" width="400px"/>
+				  <figcaption>Self-Collision with Density = 1 g/cm^2</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task4 - densityHigh.png" width="400px"/>
+				  <figcaption>Self-Collision with Density = 150 g/cm^2</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+					<img src="task4 - KSlow.png" width="400px"/>
+					<figcaption>Self-Collision with <code>ks</code> = 500 N/m</figcaption>
+				</td>
+				<td style="text-align: center;">
+					<img src="task4 - KShigh.png" width="400px"/>
+					<figcaption>Self-Collision with <code>ks</code> = 50000 N/m</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
 
 		<h2>Part 5: Shaders</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>(Optional) Part 6: Extra Credit - Additional cloth simulation features!</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 		
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
 		</div>
 	</body>
 </html>

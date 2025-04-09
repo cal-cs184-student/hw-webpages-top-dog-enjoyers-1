@@ -85,7 +85,91 @@
 		</div>
 
 		<h2>Part 2: Simulation via numerical integration</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p>
+			For this part, you can see the results of experimenting with different paramenters, such as the spring constant, damping, and density, in the 
+			simulation.
+		</p>
+
+		<h3>Spring Constant (<code>ks</code>)</h3>
+
+		<p>
+			After running our simulation, we have observed that a lower spring constant results in the cloth behaving much more "loose-ly". The fabric stretches more,
+			especially after it falls, and slowly settles into place. As it settles, it creates many visible, droopy waves. In constrast, a higher spring constant 
+			correlates to a more rigid fabric. The fabric has less stretch, settling into place relatively quickly and maintaining its shape better. Thus, the 
+			spring constant determines the stiffness and rigidity of the cloth. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task2 - KSlow.png" width="400px"/>
+				  <figcaption>Low Spring Constant (<code>ks</code> = 500 N/m)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task2 - KShigh.png" width="400px"/>
+				  <figcaption>High Spring Constant (<code>ks</code> = 50000 N/m)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Density</h3>
+
+		<p>
+			As the volume of the cloth remains constant, we know that as we increase the density, we increase the mass and as we decrease the density, we 
+			decrase the mass of our object. This can be seen clearly in our simulations. For low values for density, we see that the cloth falls much slower and 
+			the material reaches its final resting state very quickly. In constrast, for high values for density, the cloth falls quickly. The material stretches 
+			a lot and takes longer to settle. It also moves in a more exaggerated fashion.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task2 - densityLow.png" width="400px"/>
+				  <figcaption>Low Density (Density = 1 g/cm^2)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task2 - densityHigh.png" width="400px"/>
+				  <figcaption>High Density (Density = 150 g/cm^2)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<h3>Damping</h3>
+
+		<p>
+			Damping controls the speed that the fabric slows down as it moves from high velocity to rest. Lower values of damping result in the fabric 
+			oscillating for longer periods of time, slow to lose engery before it eventually comes to rest. In constast, higher values of damping result 
+			in the fabric coming to rest extremely quickly, having it stop smoothly and almost immediately. 
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="task2 - dampingLow.png" width="400px"/>
+				  <figcaption>Low Damping (Damping = 0%)</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="task2 - dampingHigh.png" width="400px"/>
+				  <figcaption>High Damping (Damping = 1%)</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		<p>
+			The image below shows the final resting state for our cloth. For this image, we used all of the default values provided (<code>ks</code> = 5000 N/m, density = 15 g/cm^2, 
+			and damping = 0.2%).
+		</p>
+
+		<figure>
+			<img src="task2 - finalResting.png" alt="Final Resting" style="width:70%"/>
+		</figure>
 
 		<h2>Part 3: Handling collisions with other objects</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
